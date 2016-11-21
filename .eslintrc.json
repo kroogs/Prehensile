@@ -1,0 +1,14 @@
+{
+    "extends": "airbnb",
+    "globals": {
+      "PIXI": "true"
+    },
+    "env": {
+      "browser": "true"
+    },
+    "rules": {
+      "no-param-reassign": "off",
+      "no-console": "off",
+      "no-bitwise": "off"
+    }
+}

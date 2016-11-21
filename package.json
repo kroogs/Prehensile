@@ -1,0 +1,13 @@
+{
+  "name": "prehensile",
+  "version": "0.1.0",
+  "description": "Deep zoom.",
+  "main": "src/prehensile.js",
+  "author": "Justin Krueger <justin@kroo.gs>",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^3.7.1",
+    "eslint-config-airbnb-base": "^9.0.0",
+    "gulp": "^3.9.1"
+  }
+}
