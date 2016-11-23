@@ -4,17 +4,11 @@
     Sprite,
     autoDetectRenderer,
     loader,
-    interaction,
   } = PIXI;
 
-  // const {
-  //   TextureCache
-  // } = PIXI.utils;
-
   class DziSourceLoader {
-    constructor(path, prehensile) {
+    constructor(path) {
       this.path = path;
-      this.prehensile = prehensile;
     }
 
     load(path, callback) {
@@ -50,7 +44,7 @@
       this.levels.reverse();
     }
 
-    tileExists(level, x, y) {
+    validTile(level, x, y) {
       const [levelX, levelY] = this.levels[level];
 
       if (levelX < x * this.tileSize || levelY < y * this.tileSize) {
@@ -61,10 +55,12 @@
     }
 
     queueTile(level, x, y) {
-      if (!this.tileExists(level, x, y)) return;
+      if (!this.validTile(level, x, y)) return;
 
-      const file = `${this.path.split('.')[0]}_files/${level}/${x}_${y}.jpeg`;
-      loader.add(`${level}/${x}_${y}`, file);
+      loader.add(
+        `${level}/${x}_${y}`,
+        `${this.path.split('.')[0]}_files/${level}/${x}_${y}.jpeg`
+      );
     }
   }
 
@@ -94,39 +90,20 @@
         this.resize(this.width, this.height);
       }
 
-      window.addEventListener('resize', () => {
-        this.resize(this.width, this.height);
-      });
-
-      //////
-      const stage = this.stage;
-      function dragHandler(event) {
-        const newPosition = event.data.global;
-        this.position.x = newPosition.x - (stage.width / 2);
-        this.position.y = newPosition.y - (stage.height / 2);
-      }
-      function zoomHandler(event) {
-        debugger
-      }
-
-      this.stage.interactive = true;
-      this.stage.on('mousemove', dragHandler);
-      this.stage.on('touchmove', dragHandler);
-      this.stage.on('wheel', zoomHandler);
-      //////
-
+      window.addEventListener('resize', this.resize.bind(this));
       rootElement.appendChild(this.renderer.view);
-      this.drawFrame();
+
+      this.tick();
     }
 
     initLoader(sourcePath) {
       this.source = new DziSourceLoader(sourcePath, this);
-      this.source.load(sourcePath, () => this.loadRegion());
+      this.source.load(sourcePath, this.loadRegion.bind(this));
     }
 
-    drawFrame() {
-      requestAnimationFrame(() => this.drawFrame());
+    tick() {
       this.renderer.render((this.stage));
+      requestAnimationFrame(this.tick.bind(this));
     }
 
     get width() {
@@ -138,6 +115,11 @@
     }
 
     resize(width, height) {
+      if (!width || !height) {
+        width = this.width;
+        height = this.height;
+      }
+
       this.renderer.view.style.width = `${width}px`;
       this.renderer.view.style.height = `${height}px`;
       this.renderer.resize(width, height);
@@ -145,8 +127,8 @@
 
     loadRegion(fromX = 0, fromY = 0, toX = 0, toY = 0, level = 'auto') {
       loader
-        .on('load', (...args) => { this.addTile(args[1]); })
-        .on('completed', () => { loader.off('load'); });
+        .on('load', (...args) => this.addTile(args[1]))
+        .on('completed', () => loader.off('load'));
 
       if (!toX) toX = this.width * this.pixelRatio;
       if (!toY) toY = this.height * this.pixelRatio;
