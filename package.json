@@ -2,12 +2,41 @@
   "name": "prehensile",
   "version": "0.1.0",
   "description": "Deep zoom.",
-  "main": "src/prehensile.js",
+  "private": "true",
+  "main": "./src/index.js",
   "author": "Justin Krueger <justin@kroo.gs>",
   "license": "MIT",
+  "scripts": {
+    "start": "webpack-dev-server",
+    "build": "webpack -p",
+    "test": "jest",
+    "lint": "flow && prettier --no-color --trailing-comma all --no-semi --single-quote --write \"src/**/*.js\" && eslint --fix src"
+  },
   "devDependencies": {
-    "eslint": "^3.7.1",
-    "eslint-config-airbnb-base": "^9.0.0",
-    "gulp": "^3.9.1"
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-eslint": "^7.2.3",
+    "babel-loader": "^7.0.0",
+    "babel-preset-env": "^1.5.1",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "eslint": "^3.19.0",
+    "eslint-plugin-flowtype": "^2.34.0",
+    "eslint-plugin-import": "^2.3.0",
+    "file-loader": "^0.11.1",
+    "flow": "^0.2.3",
+    "flow-bin": "^0.47.0",
+    "flow-typed": "^2.1.2",
+    "jest": "^20.0.4",
+    "jest-cli": "^20.0.4",
+    "prettier": "^1.4.2",
+    "webpack": "^2.6.1",
+    "webpack-dev-server": "^2.4.5"
+  },
+  "jest": {
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ]
   }
 }
