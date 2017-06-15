@@ -1,3 +1,3 @@
-module.exports.sum = function(...args: number[]): number {
-  return args.reduce((total, current) => total + current, 0)
-}
+import { Prehensile } from './prehensile'
+
+module.exports.prehensile = (...args) => new Prehensile(...args)
