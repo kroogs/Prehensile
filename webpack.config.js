@@ -8,15 +8,12 @@ module.exports = {
   output: {
     libraryTarget: 'umd',
     path: path.resolve('dist'),
-    filename: 'es2015-starter.js',
+    filename: 'dira.js',
   },
 
   resolve: {
     extensions: ['.js'],
-    modules: [
-      path.resolve('node_modules'),
-      path.resolve('src'),
-    ],
+    modules: [path.resolve('node_modules'), path.resolve('src')],
   },
 
   module: {
