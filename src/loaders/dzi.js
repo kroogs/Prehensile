@@ -37,15 +37,15 @@ export default class Dzi {
 
   isValidTile(level, x, y) {
     const [levelX, levelY] = this.levels[level]
-    if (levelX < x * this.tileSize || levelY < y * this.tileSize) return false
-    return true
+    return levelX > x * this.tileSize && levelY > y * this.tileSize
   }
 
   queueTile(level, x, y) {
-    if (!this.isValidTile(level, x, y)) return
-    loader.add(
-      `${level}/${x}_${y}`,
-      `${this.sourceUrl.split('.')[0]}_files/${level}/${x}_${y}.jpeg`,
-    )
+    if (this.isValidTile(level, x, y)) {
+      loader.add(
+        `${level}/${x}_${y}`,
+        `${this.sourceUrl.split('.')[0]}_files/${level}/${x}_${y}.jpeg`,
+      )
+    }
   }
 }
