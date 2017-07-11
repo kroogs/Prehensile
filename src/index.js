@@ -1,3 +1,3 @@
-import { Prehensile } from './prehensile'
-
-module.exports.prehensile = (...args) => new Prehensile(...args)
+export { Dira } from './dira'
+export { Dzi } from './loaders/dzi'
+export { Viewport } from './viewport'
