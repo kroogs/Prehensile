@@ -1,9 +1,8 @@
 {
-  "name": "prehensile",
+  "name": "dira",
   "version": "0.1.0",
   "description": "Deep zoom.",
-  "private": "true",
-  "main": "./src/index.js",
+  "main": "./dist/index.js",
   "author": "Justin Krueger <justin@kroo.gs>",
   "license": "MIT",
   "scripts": {
