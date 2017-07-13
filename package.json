@@ -1,8 +1,8 @@
 {
   "name": "dira",
-  "version": "0.1.0",
-  "description": "Deep zoom.",
-  "main": "./dist/index.js",
+  "version": "0.0.1",
+  "description": "Deep zoom with WebGL.",
+  "main": "./dist/dira.js",
   "author": "Justin Krueger <justin@kroo.gs>",
   "license": "MIT",
   "scripts": {
