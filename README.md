@@ -1,9 +1,9 @@
 # Dira
 [![Dependencies](https://img.shields.io/david/kroogs/dira.svg)]()
 [![Dev Dependencies](https://img.shields.io/david/dev/kroogs/dira.svg)]()
-[![MIT license](https://img.shields.io/npm/l/dira.svg)](https://spdx.org/licenses/MIT)
+[![MIT license](https://img.shields.io/github/license/kroogs/dira.svg)](https://spdx.org/licenses/MIT)
 
-> Deep zoom.
+> Deep zoom with WebGL.
 
 ## Getting Started
 
