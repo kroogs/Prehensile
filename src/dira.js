@@ -2,12 +2,8 @@ import Dzi from './loaders/dzi'
 import Viewport from './viewport'
 
 export class Dira {
-  constructor(sourceUrl, rootElement, options = {}) {
-    if (typeof sourceUrl === 'string' && rootElement instanceof HTMLElement) {
-      this.options = { ...options, rootElement, sourceUrl }
-    } else {
-      this.options = sourceUrl
-    }
+  constructor(options) {
+    this.options = options
   }
 
   use(cls) {
@@ -18,6 +14,5 @@ export class Dira {
   run() {
     if (!this.loader) this.use(Dzi)
     if (!this.viewport) this.use(Viewport)
-    this.viewport.tick()
   }
 }
