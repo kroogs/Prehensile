@@ -1,11 +1,7 @@
 import { loader } from 'pixi.js'
+import Base from './base'
 
-export default class Dzi {
-  constructor(dira) {
-    dira.loader = this
-    this.sourceUrl = dira.options.sourceUrl
-  }
-
+export default class Dzi extends Base {
   load(sourceUrl, callback) {
     loader
       .add('source', sourceUrl, { xhrType: 'document' })
@@ -18,14 +14,13 @@ export default class Dzi {
         this.height = Number(size.getAttribute('Height'))
         this.tileSize = Number(image.getAttribute('TileSize'))
         this.overlap = Number(image.getAttribute('Overlap'))
-
         this.calculateLevels()
 
         callback()
       })
   }
 
-  calculateLevels(width, height) {
+  calculateLevels(width = this.width, height = this.height) {
     this.levels = [[width, height]]
     while (width > 1 || height > 1) {
       this.levels.unshift([

@@ -1,40 +1,56 @@
 import { Container, autoDetectRenderer } from 'pixi.js'
+import TileManager from './tile/manager'
 
-//   Viewport
-//     TileLayer (Layer)
-//       Tile
+// Layers
+// -1 (default to invisible) half/quarter view of current coords
+// 0 Current, best viewing depth
+// 1 Loading area for double/quadruple view of current coords
+// 2 Duplicate of layer -1 as a backdrop
 
 export default class Viewport {
   constructor(dira) {
-    dira.viewport = this
-    this.el = dira.options.rootElement
+    this.dira = dira
+    this.dira.viewport = this
+
+    this.applyOptions(dira.options)
     this.initRenderer()
-    this.initDom()
+    this.initTileManager()
+
+    this._tick()
+  }
+
+  applyOptions(options) {
+    this.options = options
+    if (!options.pixelRatio) options.pixelRatio = window.devicePixelRatio
   }
 
   initRenderer() {
-    this.stage = new Container()
-    this.renderer = autoDetectRenderer(this.width, this.height, {
-      resolution: this.pixelRatio,
-      autoResize: true,
-      antialias: true,
-    })
-  }
-
-  initDom() {
-    this.pixelRatio = window.devicePixelRatio
-
-    if (this.pixelRatio > 1) {
-      this.renderer.view.style.imageRendering = 'pixelated'
-      this.resize(this.width, this.height)
-    }
+    this.el = this.options.rootElement
 
     this.el.style.fontSize = 0
     this.el.style.margin = 0
     this.el.style.padding = 0
 
-    window.addEventListener('resize', this.resize.bind(this))
+    this.stage = new Container()
+    this.renderer = autoDetectRenderer({
+      width: this.width,
+      height: this.height,
+      resolution: this.options.pixelRatio,
+      autoResize: true,
+      antialias: true,
+    })
+
+    if (this.options.pixelRatio > 1) {
+      this.renderer.view.style.imageRendering = 'pixelated'
+      this.resize()
+    }
+
     this.el.appendChild(this.renderer.view)
+    window.addEventListener('resize', this.resize.bind(this))
+  }
+
+  initTileManager() {
+    this.manager = new TileManager(this.dira)
   }
 
   get width() {
@@ -56,8 +72,8 @@ export default class Viewport {
     this.renderer.resize(width, height)
   }
 
-  tick() {
+  _tick() {
     this.renderer.render(this.stage)
-    requestAnimationFrame(this.tick.bind(this))
+    requestAnimationFrame(this._tick.bind(this))
   }
 }
